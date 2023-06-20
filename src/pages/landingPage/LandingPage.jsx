@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import "./LandingPage.css";
 
 import Nav from "../../components/Nav";
@@ -11,7 +13,13 @@ import Button from "@mui/material/Button";
 const LandingPage = () => {
 	const filter = useRef();
 	const [posts, setPosts] = useState(Array(20).fill(null));
+	const user = useSelector((state) => {
+		console.log(state);
+		if (Object.keys(state.auth.value).length == 0) return null;
+		return state.auth.value;
+	});
 
+	console.log("User: ", user);
 	const renderPosts = posts.map((post, index) => {
 		return (
 			<div key={index} className="property-card">
@@ -30,7 +38,7 @@ const LandingPage = () => {
 
 	return (
 		<div>
-			<Nav />
+			<Nav user={user} />
 			{/* filter */}
 			<div className="container">
 				<form

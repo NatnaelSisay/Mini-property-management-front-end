@@ -1,5 +1,8 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addUser } from "../../redux/authSlice";
+
 import "./Auth.css";
 
 import TextField from "@mui/material/TextField";
@@ -12,6 +15,9 @@ const Signup = () => {
 	const userDetail = useRef();
 	const navigate = useNavigate();
 	const [role, setRole] = useState("");
+
+	const user = useSelector((state) => state.auth.value);
+	const dispatch = useDispatch();
 
 	function handleSignup(e) {
 		e.preventDefault();
@@ -27,6 +33,7 @@ const Signup = () => {
 		};
 
 		console.log("user data : ", data);
+		dispatch(addUser(data));
 		// send data to backend
 		// save user to the golbal state
 		navigate("/");
