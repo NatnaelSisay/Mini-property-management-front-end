@@ -1,8 +1,10 @@
 import React from 'react'
-
+import PropertyCard from '../../components/PropertyCard'
 const LandingPage = () => {
   return (
-    <div>LandingPage</div>
+    <div>LandingPage
+      <PropertyCard />
+    </div>
   )
 }
 
