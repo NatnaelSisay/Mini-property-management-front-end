@@ -5,6 +5,8 @@ import PropetryDetailPage from "./pages/propertyDetailPage/PropetryDetailPage";
 import FavoritesPage from "./pages/favoritesPage/FavoritesPage";
 import AdminPage from "./pages/adminPage/AdminPage";
 import MyOffersPage from "./pages/myOffersPage/MyOffersPage";
+import Login from "./pages/authPage/Login";
+import Signup from "./pages/authPage/Signup";
 
 const PageRouter = () => {
 	return (
@@ -15,6 +17,9 @@ const PageRouter = () => {
 			<Route path="/favorites" element={<FavoritesPage />} />
 			<Route path="/admin" element={<AdminPage />} />
 			<Route path="/offers" element={<MyOffersPage />} />
+
+			<Route path="/signup" element={<Signup />} />
+			<Route path="/login" element={<Login />} />
 		</Routes>
 	);
 };
