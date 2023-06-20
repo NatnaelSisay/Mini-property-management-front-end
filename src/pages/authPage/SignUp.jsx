@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
 
 import TextField from "@mui/material/TextField";
@@ -10,12 +10,26 @@ import { Typography } from "@mui/material";
 
 const Signup = () => {
 	const userDetail = useRef();
+	const navigate = useNavigate();
 	const [role, setRole] = useState("");
 
 	function handleSignup(e) {
 		e.preventDefault();
-		console.log(userDetail);
-		console.log("role : ", role);
+
+		const { firstName, lastName, email, password } = userDetail.current;
+
+		const data = {
+			firstName: firstName.value,
+			lastName: lastName.value,
+			email: email.value,
+			password: password.value,
+			role: role,
+		};
+
+		console.log("user data : ", data);
+		// send data to backend
+		// save user to the golbal state
+		navigate("/");
 	}
 
 	return (
