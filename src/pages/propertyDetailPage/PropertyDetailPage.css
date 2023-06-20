@@ -1,0 +1,18 @@
+.dialog-box {
+	display: flex;
+}
+
+.dialog-image {
+	margin: 0 1rem;
+}
+
+.offers-detail {
+	margin: 1rem 0;
+}
+
+.make-offer-form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 1rem;
+}
