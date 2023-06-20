@@ -39,19 +39,28 @@ export default function PropetryDetailPage(props) {
 					<DialogTitle id="alert-dialog-title">
 						Appartment for rent, Two bedroom apartment with 1 shared kitchen
 					</DialogTitle>
-					<DialogContent className="dialog-box">
-						<div className="dialog-image">
-							<img src="https://photos.zillowstatic.com/fp/be98bf53c0259949bce4b0b945654cf2-cc_ft_768.webp" />
-						</div>
-						<div>
-							<DialogContentText id="alert-dialog-description">
-								{property.description}
-							</DialogContentText>
-							<PropertyDetailTable property={property} />
-							<Button variant="contained">Make an Offer</Button>
-						</div>
+					<DialogContent>
+						<PropertyDetail property={property} />
 					</DialogContent>
 				</Dialog>
+			</div>
+		)
+	);
+}
+function PropertyDetail({ property }) {
+	return (
+		property && (
+			<div className="dialog-box">
+				<div className="dialog-image">
+					<img src="https://photos.zillowstatic.com/fp/be98bf53c0259949bce4b0b945654cf2-cc_ft_768.webp" />
+				</div>
+				<div>
+					<DialogContentText id="alert-dialog-description">
+						{property.description}
+					</DialogContentText>
+					<PropertyDetailTable property={property} />
+					<Button variant="contained">Make an Offer</Button>
+				</div>
 			</div>
 		)
 	);
