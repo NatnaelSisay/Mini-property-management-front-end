@@ -1,0 +1,22 @@
+.offers-content {
+	display: flex;
+	/* align-items: center; */
+	justify-content: space-between;
+}
+
+.offers-content-img {
+	flex: 1;
+	padding: 1rem;
+	/* width: 50%; */
+}
+
+.offers-content-detail {
+	flex: 2;
+	padding: 1rem;
+}
+
+.offer-content-actions {
+	margin-top: 1rem;
+	display: flex;
+	justify-content: space-between;
+}
