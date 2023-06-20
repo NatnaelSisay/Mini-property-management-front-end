@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import "./PropertyDetailPage.css";
 
@@ -10,6 +10,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
 
 export default function PropetryDetailPage(props) {
 	const [open, setOpen] = useState(true);
@@ -52,6 +53,13 @@ export default function PropetryDetailPage(props) {
 	);
 }
 function PropertyDetail({ property }) {
+	const offerInput = useRef();
+
+	function handleMakeOffer(e) {
+		e.preventDefault();
+		const { amount } = offerInput.current;
+		console.log("Make Offer: ", amount.value);
+	}
 	return (
 		property && (
 			<div className="dialog-box">
@@ -63,7 +71,21 @@ function PropertyDetail({ property }) {
 						{property.description}
 					</DialogContentText>
 					<PropertyDetailTable property={property} />
-					<Button variant="contained">Make an Offer</Button>
+					<div className="make-offer-form">
+						<form ref={offerInput} onSubmit={handleMakeOffer}>
+							<TextField
+								id="outlined-basic"
+								label="MinPrice"
+								variant="outlined"
+								name="amount"
+								inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+								size="small"
+							/>
+							<Button variant="contained" type="submit">
+								Make an Offer
+							</Button>
+						</form>
+					</div>
 				</div>
 			</div>
 		)
@@ -90,17 +112,3 @@ const mockProperty = {
 	propertyType: "APARTMENT",
 	propertyStatus: "AVAILABLE",
 };
-
-// private long id;
-
-// private BigDecimal offerPrice;
-
-// private OfferStatus offerStatus;
-
-// @ManyToOne
-// @JoinColumn(name = "customer_id")
-// private User customer;
-
-// @ManyToOne
-// @JoinColumn(name = "property_id")
-// private Property property;

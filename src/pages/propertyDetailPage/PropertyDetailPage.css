@@ -9,3 +9,10 @@
 .offers-detail {
 	margin: 1rem 0;
 }
+
+.make-offer-form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 1rem;
+}

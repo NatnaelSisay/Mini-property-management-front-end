@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import "./LandingPage.css";
 
 import Nav from "../../components/Nav";
@@ -14,7 +15,9 @@ const LandingPage = () => {
 	const renderPosts = posts.map((post, index) => {
 		return (
 			<div key={index} className="property-card">
-				<PropertyCard />
+				<Link to={`/property/${index}`}>
+					<PropertyCard />
+				</Link>
 			</div>
 		);
 	});
