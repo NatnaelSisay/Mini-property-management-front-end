@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-
+import { useNavigate } from "react-router-dom";
 import "./PropertyDetailPage.css";
 
 import PropertyDetailTable from "../../components/PropertyDetailTable";
@@ -15,21 +15,23 @@ import TextField from "@mui/material/TextField";
 export default function PropetryDetailPage(props) {
 	const [open, setOpen] = useState(true);
 	const [property, setProperty] = useState(mockProperty);
+	const navigate = useNavigate();
+	const userOffer = useRef();
 
-	const handleClickOpen = () => {
-		setOpen(true);
+	const handleMakeOffer = (e) => {
+		e.preventDefault();
+		console.log("user offer => ", userOffer.current[0].value);
+		// send offer to backend and update
 	};
 
 	const handleClose = () => {
 		setOpen(false);
+		navigate(-1);
 	};
 
 	return (
 		property && (
 			<div>
-				<Button variant="outlined" onClick={handleClickOpen}>
-					Open alert dialog
-				</Button>
 				<Dialog
 					open={open}
 					onClose={handleClose}
@@ -42,7 +44,11 @@ export default function PropetryDetailPage(props) {
 						Appartment for rent, Two bedroom apartment with 1 shared kitchen
 					</DialogTitle>
 					<DialogContent>
-						<PropertyDetail property={property} />
+						<PropertyDetail
+							property={property}
+							userOffer={userOffer}
+							handleMakeOffer={handleMakeOffer}
+						/>
 						<div className="offers-detail">
 							<OfferDetailTable />
 						</div>
@@ -52,14 +58,7 @@ export default function PropetryDetailPage(props) {
 		)
 	);
 }
-function PropertyDetail({ property }) {
-	const offerInput = useRef();
-
-	function handleMakeOffer(e) {
-		e.preventDefault();
-		const { amount } = offerInput.current;
-		console.log("Make Offer: ", amount.value);
-	}
+function PropertyDetail({ property, userOffer, handleMakeOffer }) {
 	return (
 		property && (
 			<div className="dialog-box">
@@ -72,7 +71,7 @@ function PropertyDetail({ property }) {
 					</DialogContentText>
 					<PropertyDetailTable property={property} />
 					<div className="make-offer-form">
-						<form ref={offerInput} onSubmit={handleMakeOffer}>
+						<form ref={userOffer} onSubmit={handleMakeOffer}>
 							<TextField
 								id="outlined-basic"
 								label="MinPrice"
