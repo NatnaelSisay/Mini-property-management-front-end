@@ -30,7 +30,7 @@ export default function Nav(props) {
 						<Button color="inherit">Buy</Button>
 					)} */}
 					{user ? (
-						<Button>Signout</Button>
+						<Button color="inherit">Signout</Button>
 					) : (
 						<Button color="inherit">Signin</Button>
 					)}
