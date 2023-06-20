@@ -1,9 +1,13 @@
-import React from 'react'
+import "./MyOffersPage.css";
+
+import Nav from "../../components/Nav";
 
 const MyOffersPage = () => {
-  return (
-    <div>MyOffersPage</div>
-  )
-}
+	return (
+		<div>
+			<Nav />
+		</div>
+	);
+};
 
-export default MyOffersPage
+export default MyOffersPage;
