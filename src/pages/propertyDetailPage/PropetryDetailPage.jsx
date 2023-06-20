@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./PropertyDetailPage.css";
 
 import PropertyDetailTable from "../../components/PropertyDetailTable";
+import OfferDetailTable from "../../components/OfferDetailTable";
 
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -41,6 +42,9 @@ export default function PropetryDetailPage(props) {
 					</DialogTitle>
 					<DialogContent>
 						<PropertyDetail property={property} />
+						<div className="offers-detail">
+							<OfferDetailTable />
+						</div>
 					</DialogContent>
 				</Dialog>
 			</div>
@@ -65,6 +69,7 @@ function PropertyDetail({ property }) {
 		)
 	);
 }
+
 const mockProperty = {
 	price: 123,
 	address: {
@@ -85,3 +90,17 @@ const mockProperty = {
 	propertyType: "APARTMENT",
 	propertyStatus: "AVAILABLE",
 };
+
+// private long id;
+
+// private BigDecimal offerPrice;
+
+// private OfferStatus offerStatus;
+
+// @ManyToOne
+// @JoinColumn(name = "customer_id")
+// private User customer;
+
+// @ManyToOne
+// @JoinColumn(name = "property_id")
+// private Property property;
