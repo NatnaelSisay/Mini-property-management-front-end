@@ -21,11 +21,9 @@ const Login = () => {
   function handleSignup(e) {
     e.preventDefault();
     console.log(userDetail);
-    const { email, password } = userDetail.current;
-    const data = {
-      email: email.value,
-      password: password.value,
-    };
+
+    const formData = new FormData(userDetail.current);
+    const data = Object.fromEntries(formData);
 
     login(data)
       .then((res) => {
