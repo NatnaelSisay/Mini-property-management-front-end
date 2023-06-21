@@ -21,7 +21,6 @@ const Login = () => {
 
   function handleSignup(e) {
     e.preventDefault();
-    console.log(userDetail);
 
     const formData = new FormData(userDetail.current);
     const data = Object.fromEntries(formData);
@@ -31,7 +30,7 @@ const Login = () => {
         setCookie("refreshToken", res.data.refreshToken);
         setCookie("accessToken", res.data.accessToken);
         dispatch(addUser(decodeToken(res.data.accessToken)));
-        navigate("/");
+        navigate("/", { replace: true });
       })
       .catch((err) => {});
   }
@@ -64,7 +63,10 @@ const Login = () => {
               Login
             </Button>
             <Button color="error">
-              <Link to="/signup"> Create an Account? </Link>
+              <Link to="/signup" replace>
+                {" "}
+                Create an Account?{" "}
+              </Link>
             </Button>
           </div>
         </form>

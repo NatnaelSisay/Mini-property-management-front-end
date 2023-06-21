@@ -5,3 +5,7 @@ export const login = ({ email, password }) => {
   const payload = { email, password };
   return axios.post(`${BASE_URL}/api/v1/auth/login`, payload);
 };
+
+export const signUp = (data) => {
+  return axios.post(`${BASE_URL}/api/v1/auth/register`, data);
+};
