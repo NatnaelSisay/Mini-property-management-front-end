@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import "./Auth.css";
 
 import { addUser } from "../../redux/authSlice";
-import { getSampleUser } from "../../utils/jwtUtils";
+import { decodeToken } from "../../utils/jwtUtils";
 
 // MATERIAL-UI
 import TextField from "@mui/material/TextField";
@@ -29,12 +29,11 @@ const Login = () => {
     login(data)
       .then((res) => {
         setCookie("refreshToken", res.data.refreshToken);
-        console.log(getCookie("refreshToken"));
+        setCookie("accessToken", res.data.accessToken);
+        dispatch(addUser(decodeToken(res.data.accessToken)));
+        navigate("/");
       })
       .catch((err) => {});
-
-    // dispatch(addUser(getSampleUser()));
-    // navigate("/");
   }
 
   return (
