@@ -17,47 +17,26 @@ const LandingPage = () => {
 
   function handleFilter(e) {
     e.preventDefault();
-    const {
-      minPrice,
-      maxPrice,
-      numberOfBedRooms,
-      numberOfBathRooms,
-      zipCode,
-      city,
-      state,
-    } = filter.current;
 
-    const data = {
-      minPrice: Number(minPrice.value),
-      maxPrice: maxPrice.value,
-      bedRooms: numberOfBedRooms.value,
-      bathRooms: numberOfBathRooms.value,
-      zipCode: zipCode.value,
-      city: city.value,
-      state: state.value,
-    };
+    const formData = new FormData(filter.current);
+    const data = Object.fromEntries(formData);
 
-    console.log("Filter data", data);
-    // call the api and update the properties
-    // GET /api/v1/properties data
-    fetchData();
+    fetchProperties(data);
   }
 
-  function fetchData() {
-    setProperties(Array(5).fill(mockProperty));
-  }
-
-  const fetchProperties = () => {
-    getProperties()
+  const fetchProperties = (filterData) => {
+    getProperties(filterData)
       .then((res) => {
-        setProperties(res.data);
+        if (filterData) {
+          setFilteredProperties(res.data);
+        } else setProperties(res.data);
       })
       .catch((err) => {});
   };
 
   useEffect(() => {
     fetchProperties();
-  }, []);
+  }, [user]);
 
   return (
     <div>
@@ -65,7 +44,15 @@ const LandingPage = () => {
 
       {(!user || user.role === "USER") && (
         <div className="container">
-          <PropertiesFilter handleFilter={handleFilter} />
+          <PropertiesFilter
+            showClear={filteredProperties}
+            ref={filter}
+            onClear={() => {
+              setFilteredProperties(null);
+              filter.current.reset();
+            }}
+            handleFilter={handleFilter}
+          />
         </div>
       )}
 
