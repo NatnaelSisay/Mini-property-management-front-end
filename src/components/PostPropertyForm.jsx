@@ -13,9 +13,21 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const PostPropertyForm = () => {
+const PostPropertyForm = ({ selectedImage, setImageSelected }) => {
+  const handleButtonClick = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = (event) => {
+      const file = event.target.files[0];
+      setImageSelected(file);
+    };
+    input.click();
+  };
+
   return (
     <Card
+      margin="50px"
       elevation={5}
       sx={{
         padding: "20px",
@@ -56,6 +68,23 @@ const PostPropertyForm = () => {
               label="Number of floors"
             />
             <InputField name="yearBuilt" type="number" label="Year built" />
+            {selectedImage && (
+              <img
+                height="80px"
+                style={{
+                  objectFit: "contain",
+                }}
+                src={URL.createObjectURL(selectedImage)}
+              />
+            )}
+            {selectedImage && (
+              <Button color="error" onClick={() => setImageSelected(null)}>
+                Remove picture
+              </Button>
+            )}
+            {!selectedImage && (
+              <Button onClick={handleButtonClick}> Upload picture</Button>
+            )}
           </Box>
 
           <br />
@@ -105,6 +134,7 @@ const InputField = ({ label, name, type }) => (
       width: {
         sm: "100%",
         md: "45%",
+        md: "30%",
       },
     }}
   >
@@ -124,6 +154,7 @@ const SelectPropertyType = ({}) => (
       width: {
         sm: "100%",
         md: "45%",
+        md: "30%",
       },
     }}
   >

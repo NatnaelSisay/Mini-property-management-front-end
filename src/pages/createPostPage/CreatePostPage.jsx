@@ -12,7 +12,7 @@ import PostPropertyForm from "../../components/PostPropertyForm";
 import { Link } from "react-router-dom";
 
 const CreatePostPage = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setImageSelected] = useState(null);
 
   return (
     <Container
@@ -24,7 +24,10 @@ const CreatePostPage = () => {
         alignItems: "center",
       }}
     >
-      <PostPropertyForm />
+      <PostPropertyForm
+        selectedImage={selectedImage}
+        setImageSelected={setImageSelected}
+      />
     </Container>
   );
 };
