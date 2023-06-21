@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 
 import { Typography } from "@mui/material";
 import { login } from "../../apis/authApis";
+import { getCookie, setCookie } from "../../utils/cookieUtil";
 
 const Login = () => {
   const userDetail = useRef();
@@ -27,11 +28,11 @@ const Login = () => {
 
     login(data)
       .then((res) => {
-        console.log("login res: ", res.data);
+        setCookie("refreshToken", res.data.refreshToken);
+        console.log(getCookie("refreshToken"));
       })
       .catch((err) => {});
 
-    // console.log("login data: ", data);
     // dispatch(addUser(getSampleUser()));
     // navigate("/");
   }
