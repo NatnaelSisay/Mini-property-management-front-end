@@ -1,20 +1,36 @@
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import "./Auth.css";
 
+import { addUser } from "../../redux/authSlice";
+import { getSampleUser } from "../../utils/jwtUtils";
+
+// MATERIAL-UI
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-import BasicSelectComponent from "../../components/BasicSelectComponent";
 import { Typography } from "@mui/material";
 
 const Login = () => {
 	const userDetail = useRef();
-	const [role, setRole] = useState("");
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	function handleSignup(e) {
 		e.preventDefault();
 		console.log(userDetail);
+		const { email, password } = userDetail.current;
+		const data = {
+			email: email.value,
+			password: password.value,
+		};
+		console.log("login data: ", data);
+
+		// send to backend
+		// save user to global state
+		dispatch(addUser(getSampleUser()));
+		navigate("/");
 	}
 
 	return (
