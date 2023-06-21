@@ -31,3 +31,10 @@
   margin: 0.5rem 0.5rem;
   /* display: block; */
 }
+
+.pagination-container {
+  width: 50%;
+  margin: 0 auto 2rem auto;
+  display: flex;
+  justify-content: center;
+}
