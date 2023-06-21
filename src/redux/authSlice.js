@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getUserFromAccessToken } from "../utils/jwtUtils";
 
-const initialState = { value: {} };
+const initialState = { value: getUserFromAccessToken() || null };
 
 export const authSlice = createSlice({
 	name: "auth",
@@ -10,7 +11,7 @@ export const authSlice = createSlice({
 			state.value = action.payload;
 		},
 		removeUser: (state) => {
-			state.value = {};
+			state.value = null;
 		},
 	},
 });

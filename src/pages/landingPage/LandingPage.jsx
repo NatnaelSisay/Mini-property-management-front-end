@@ -7,26 +7,15 @@ import "./LandingPage.css";
 import Nav from "../../components/Nav";
 import PropertyCard from "../../components/PropertyCard";
 
+// MATERIAL-UI
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 const LandingPage = () => {
 	const filter = useRef();
 	const [posts, setPosts] = useState(Array(20).fill(null));
-	const user = useSelector((state) => {
-		if (Object.keys(state.auth.value).length == 0) return null;
-		return state.auth.value;
-	});
+	const user = useSelector((state) => state.auth.value);
 
-	const renderPosts = posts.map((post, index) => {
-		return (
-			<div key={index} className="property-card">
-				<Link to={`/property/${index}`}>
-					<PropertyCard />
-				</Link>
-			</div>
-		);
-	});
 	function handleFilter(e) {
 		e.preventDefault();
 		const { minPrice } = filter.current;
@@ -78,9 +67,23 @@ const LandingPage = () => {
 				</form>
 			</div>
 
-			<div className="container flex-wrap">{renderPosts}</div>
+			<div className="container flex-wrap">
+				<Posts posts={posts} />
+			</div>
 		</div>
 	);
+};
+
+const Posts = ({ posts }) => {
+	return posts.map((post, index) => {
+		return (
+			<div key={index} className="property-card">
+				<Link to={`/property/${index}`}>
+					<PropertyCard />
+				</Link>
+			</div>
+		);
+	});
 };
 
 export default LandingPage;

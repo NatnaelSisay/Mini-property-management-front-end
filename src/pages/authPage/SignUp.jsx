@@ -1,22 +1,20 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../../redux/authSlice";
+import { useDispatch } from "react-redux";
 
 import "./Auth.css";
+import BasicSelectComponent from "../../components/BasicSelectComponent";
+import { addUser } from "../../redux/authSlice";
 
+// MATERIAL-UI
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-
-import BasicSelectComponent from "../../components/BasicSelectComponent";
 import { Typography } from "@mui/material";
 
 const Signup = () => {
 	const userDetail = useRef();
 	const navigate = useNavigate();
 	const [role, setRole] = useState("");
-
-	const user = useSelector((state) => state.auth.value);
 	const dispatch = useDispatch();
 
 	function handleSignup(e) {
