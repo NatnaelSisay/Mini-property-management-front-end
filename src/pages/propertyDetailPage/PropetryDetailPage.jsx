@@ -1,12 +1,14 @@
 import { useState, useRef } from "react";
+import { useSelector } from "react-redux";
+
+import { mockProperty } from "../../utils/mockData";
 
 import "./PropertyDetailPage.css";
 import PropertyDetailTable from "../../components/PropertyDetailTable";
 import OfferDetailTable from "../../components/OfferDetailTable";
 import Nav from "../../components/Nav";
 
-import { mockProperty } from "../../utils/mockData";
-
+// MATERIAL-UI
 import Button from "@mui/material/Button";
 import DialogContentText from "@mui/material/DialogContentText";
 import TextField from "@mui/material/TextField";
@@ -14,6 +16,7 @@ import TextField from "@mui/material/TextField";
 export default function PropetryDetailPage(props) {
 	const [property, setProperty] = useState(mockProperty);
 	const userOffer = useRef();
+	const user = useSelector((state) => state.auth.value);
 
 	const handleMakeOffer = (e) => {
 		e.preventDefault();
@@ -31,6 +34,23 @@ export default function PropetryDetailPage(props) {
 						userOffer={userOffer}
 						handleMakeOffer={handleMakeOffer}
 					/>
+					{user.role !== "OWNER" && (
+						<div className="make-offer-form">
+							<form ref={userOffer} onSubmit={handleMakeOffer}>
+								<TextField
+									id="outlined-basic"
+									label="MinPrice"
+									variant="outlined"
+									name="amount"
+									inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+									size="small"
+								/>
+								<Button variant="contained" type="submit">
+									Make an Offer
+								</Button>
+							</form>
+						</div>
+					)}
 					<div className="offers-detail">
 						<OfferDetailTable offers={property.offers} />
 					</div>
@@ -52,21 +72,6 @@ function PropertyDetail({ property, userOffer, handleMakeOffer }) {
 						{property.description}
 					</DialogContentText>
 					<PropertyDetailTable property={property} />
-					<div className="make-offer-form">
-						<form ref={userOffer} onSubmit={handleMakeOffer}>
-							<TextField
-								id="outlined-basic"
-								label="MinPrice"
-								variant="outlined"
-								name="amount"
-								inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-								size="small"
-							/>
-							<Button variant="contained" type="submit">
-								Make an Offer
-							</Button>
-						</form>
-					</div>
 				</div>
 			</div>
 		)
