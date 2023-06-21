@@ -11,63 +11,68 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 import { Typography } from "@mui/material";
+import { login } from "../../apis/authApis";
 
 const Login = () => {
-	const userDetail = useRef();
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
+  const userDetail = useRef();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-	function handleSignup(e) {
-		e.preventDefault();
-		console.log(userDetail);
-		const { email, password } = userDetail.current;
-		const data = {
-			email: email.value,
-			password: password.value,
-		};
-		console.log("login data: ", data);
+  function handleSignup(e) {
+    e.preventDefault();
+    console.log(userDetail);
+    const { email, password } = userDetail.current;
+    const data = {
+      email: email.value,
+      password: password.value,
+    };
 
-		// send to backend
-		// save user to global state
-		dispatch(addUser(getSampleUser()));
-		navigate("/");
-	}
+    login(data)
+      .then((res) => {
+        console.log("login res: ", res.data);
+      })
+      .catch((err) => {});
 
-	return (
-		<div className="all-center">
-			<div className="auth-container box-shadow">
-				<Typography level="h1" fontSize="25px">
-					Login
-				</Typography>
-				<form ref={userDetail} onSubmit={handleSignup} className="auth-form">
-					<TextField
-						id="email"
-						label="email"
-						variant="outlined"
-						name="email"
-						className="auth-form-input"
-					/>
-					<TextField
-						id="password"
-						label="password"
-						variant="outlined"
-						name="password"
-						type="password"
-						className="auth-form-input"
-					/>
+    // console.log("login data: ", data);
+    // dispatch(addUser(getSampleUser()));
+    // navigate("/");
+  }
 
-					<div className="action-buttons">
-						<Button type="submit" color="success" variant="contained">
-							Login
-						</Button>
-						<Button color="error">
-							<Link to="/signup"> Create an Account? </Link>
-						</Button>
-					</div>
-				</form>
-			</div>
-		</div>
-	);
+  return (
+    <div className="all-center">
+      <div className="auth-container box-shadow">
+        <Typography level="h1" fontSize="25px">
+          Login
+        </Typography>
+        <form ref={userDetail} onSubmit={handleSignup} className="auth-form">
+          <TextField
+            id="email"
+            label="email"
+            variant="outlined"
+            name="email"
+            className="auth-form-input"
+          />
+          <TextField
+            id="password"
+            label="password"
+            variant="outlined"
+            name="password"
+            type="password"
+            className="auth-form-input"
+          />
+
+          <div className="action-buttons">
+            <Button type="submit" color="success" variant="contained">
+              Login
+            </Button>
+            <Button color="error">
+              <Link to="/signup"> Create an Account? </Link>
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default Login;

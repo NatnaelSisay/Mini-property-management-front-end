@@ -48,9 +48,11 @@ const LandingPage = () => {
   }
 
   const fetchProperties = () => {
-    getProperties().then((res) => {
-      setProperties(res.data);
-    });
+    getProperties()
+      .then((res) => {
+        setProperties(res.data);
+      })
+      .catch((err) => {});
   };
 
   useEffect(() => {
