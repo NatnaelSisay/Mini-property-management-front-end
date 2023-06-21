@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { removeToken } from "../utils/jwtUtils";
@@ -21,6 +21,7 @@ export default function Nav() {
 	function handleSignout() {
 		removeToken();
 		dispatch(removeUser());
+		navigate("/");
 	}
 
 	function handleSignIn() {
@@ -33,19 +34,16 @@ export default function Nav() {
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static" sx={{ backgroundColor: "#f44336" }}>
 				<Toolbar>
-					<IconButton
-						size="large"
-						edge="start"
-						color="inherit"
-						aria-label="menu"
-						sx={{ mr: 2 }}
-					></IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						{" "}
-						Mini-Home
+						<Link to="/">Mini-Home</Link>
 					</Typography>
 					{user && user.role === "OWNER" && (
-						<Button color="inherit">sell</Button>
+						<>
+							<Button color="inherit">
+								<Link to="/offers">offers</Link>
+							</Button>
+							<Button color="inherit">sell</Button>
+						</>
 					)}
 					{user ? (
 						<Button color="inherit" onClick={() => handleSignout()}>
