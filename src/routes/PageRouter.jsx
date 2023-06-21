@@ -8,12 +8,21 @@ import Login from "../pages/authPage/Login";
 import Signup from "../pages/authPage/Signup";
 
 import Protected from "./Protected";
+import ProtectedAdmin from "./ProtectedAdmin";
+import ProtectedLanding from "./ProtectedLanding";
 
 const PageRouter = () => {
 	return (
 		<Routes>
 			{/* Put your page routes here...  */}
-			<Route path="/" element={<LandingPage />} />
+			<Route
+				path="/"
+				element={
+					<ProtectedLanding>
+						<LandingPage />
+					</ProtectedLanding>
+				}
+			/>
 			<Route path="/signup" element={<Signup />} />
 			<Route path="/login" element={<Login />} />
 
@@ -36,9 +45,9 @@ const PageRouter = () => {
 			<Route
 				path="/admin"
 				element={
-					<Protected>
+					<ProtectedAdmin>
 						<AdminPage />
-					</Protected>
+					</ProtectedAdmin>
 				}
 			/>
 			<Route
