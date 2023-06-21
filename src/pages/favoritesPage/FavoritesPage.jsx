@@ -4,27 +4,30 @@ import "./FavoritesPage.css";
 import Nav from "../../components/Nav";
 import PropertyCard from "../../components/PropertyCard";
 
-const FavoritesPage = () => {
-	const [favorites, setFavorites] = useState(mockFavs);
+import { mockProperty } from "../../utils/mockData";
 
-	const favoriteProperties = favorites.map((property, index) => {
+const FavoritesPage = () => {
+	const [favoriteProperties, setFavoriteProperties] = useState([
+		mockProperty,
+		mockProperty,
+	]);
+
+	const favoritePropertiesRender = favoriteProperties.map((property, index) => {
 		return (
 			<div key={index} className="property-card">
-				<PropertyCard key={index} />
+				<PropertyCard key={index} property={property} />
 			</div>
 		);
 	});
 
 	return (
-		favorites && (
+		favoriteProperties && (
 			<div>
 				<Nav />
-				<div className="container flex-wrap">{favoriteProperties}</div>
+				<div className="container flex-wrap">{favoritePropertiesRender}</div>
 			</div>
 		)
 	);
 };
-
-const mockFavs = Array(10).fill(null);
 
 export default FavoritesPage;

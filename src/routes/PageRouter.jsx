@@ -6,10 +6,13 @@ import AdminPage from "../pages/adminPage/AdminPage";
 import MyOffersPage from "../pages/myOffersPage/MyOffersPage";
 import Login from "../pages/authPage/Login";
 import Signup from "../pages/authPage/Signup";
+import CreatePostPage from "../pages/createPostPage/CreatePostPage";
 
-import Protected from "./Protected";
+import ProtectedOffers from "./ProtectedOffers";
 import ProtectedAdmin from "./ProtectedAdmin";
 import ProtectedLanding from "./ProtectedLanding";
+import ProtectedCreatePost from "./ProtectedCreatePost";
+import ProtectedFavorite from "./ProtectedFavorite";
 
 const PageRouter = () => {
 	return (
@@ -26,20 +29,13 @@ const PageRouter = () => {
 			<Route path="/signup" element={<Signup />} />
 			<Route path="/login" element={<Login />} />
 
-			<Route
-				path="/property/:id"
-				element={
-					<Protected>
-						<PropetryDetailPage />
-					</Protected>
-				}
-			/>
+			<Route path="/property/:id" element={<PropetryDetailPage />} />
 			<Route
 				path="/favorites"
 				element={
-					<Protected>
+					<ProtectedFavorite>
 						<FavoritesPage />
-					</Protected>
+					</ProtectedFavorite>
 				}
 			/>
 			<Route
@@ -53,9 +49,17 @@ const PageRouter = () => {
 			<Route
 				path="/offers"
 				element={
-					<Protected>
+					<ProtectedOffers>
 						<MyOffersPage />{" "}
-					</Protected>
+					</ProtectedOffers>
+				}
+			/>
+			<Route
+				path="/create-post"
+				element={
+					<ProtectedCreatePost>
+						<CreatePostPage />
+					</ProtectedCreatePost>
 				}
 			/>
 		</Routes>

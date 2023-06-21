@@ -42,9 +42,20 @@ export default function Nav() {
 							<Button color="inherit">
 								<Link to="/offers">offers</Link>
 							</Button>
-							<Button color="inherit">sell</Button>
+							<Button color="inherit">
+								<Link to="/create-post">post</Link>
+							</Button>
 						</>
 					)}
+
+					{user && user.role === "USER" && (
+						<>
+							<Button color="inherit">
+								<Link to="/favorites">favorites</Link>
+							</Button>
+						</>
+					)}
+
 					{user ? (
 						<Button color="inherit" onClick={() => handleSignout()}>
 							Signout
