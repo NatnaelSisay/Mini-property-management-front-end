@@ -6,6 +6,7 @@ import "./LandingPage.css";
 
 import Nav from "../../components/Nav";
 import PropertyCard from "../../components/PropertyCard";
+import { mockProperty } from "../../utils/mockData";
 
 // MATERIAL-UI
 import TextField from "@mui/material/TextField";
@@ -13,7 +14,7 @@ import Button from "@mui/material/Button";
 
 const LandingPage = () => {
 	const filter = useRef();
-	const [posts, setPosts] = useState(Array(20).fill(null));
+	const [properties, setProperties] = useState(Array(5).fill(mockProperty));
 	const user = useSelector((state) => state.auth.value);
 
 	function handleFilter(e) {
@@ -68,18 +69,18 @@ const LandingPage = () => {
 			</div>
 
 			<div className="container flex-wrap">
-				<Posts posts={posts} />
+				<Properties properties={properties} />
 			</div>
 		</div>
 	);
 };
 
-const Posts = ({ posts }) => {
-	return posts.map((post, index) => {
+const Properties = ({ properties }) => {
+	return properties.map((property, index) => {
 		return (
 			<div key={index} className="property-card">
 				<Link to={`/property/${index}`}>
-					<PropertyCard />
+					<PropertyCard property={property} />
 				</Link>
 			</div>
 		);
