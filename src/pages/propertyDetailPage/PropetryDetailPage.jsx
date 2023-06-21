@@ -1,21 +1,18 @@
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import "./PropertyDetailPage.css";
 
+import "./PropertyDetailPage.css";
 import PropertyDetailTable from "../../components/PropertyDetailTable";
 import OfferDetailTable from "../../components/OfferDetailTable";
+import Nav from "../../components/Nav";
+
+import { mockProperty } from "../../utils/mockData";
 
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 
 export default function PropetryDetailPage(props) {
-	const [open, setOpen] = useState(true);
 	const [property, setProperty] = useState(mockProperty);
-	const navigate = useNavigate();
 	const userOffer = useRef();
 
 	const handleMakeOffer = (e) => {
@@ -24,40 +21,25 @@ export default function PropetryDetailPage(props) {
 		// send offer to backend and update
 	};
 
-	const handleClose = () => {
-		setOpen(false);
-		navigate(-1);
-	};
-
 	return (
 		property && (
 			<div>
-				<Dialog
-					open={open}
-					onClose={handleClose}
-					aria-labelledby="alert-dialog-title"
-					aria-describedby="alert-dialog-description"
-					fullWidth
-					maxWidth="xl"
-				>
-					<DialogTitle id="alert-dialog-title">
-						Appartment for rent, Two bedroom apartment with 1 shared kitchen
-					</DialogTitle>
-					<DialogContent>
-						<PropertyDetail
-							property={property}
-							userOffer={userOffer}
-							handleMakeOffer={handleMakeOffer}
-						/>
-						<div className="offers-detail">
-							<OfferDetailTable />
-						</div>
-					</DialogContent>
-				</Dialog>
+				<Nav />
+				<div className="container">
+					<PropertyDetail
+						property={property}
+						userOffer={userOffer}
+						handleMakeOffer={handleMakeOffer}
+					/>
+					<div className="offers-detail">
+						<OfferDetailTable offers={property.offers} />
+					</div>
+				</div>
 			</div>
 		)
 	);
 }
+
 function PropertyDetail({ property, userOffer, handleMakeOffer }) {
 	return (
 		property && (
@@ -90,24 +72,3 @@ function PropertyDetail({ property, userOffer, handleMakeOffer }) {
 		)
 	);
 }
-
-const mockProperty = {
-	price: 123,
-	address: {
-		street: "4th",
-		city: "Fairfield",
-		state: "Iowa",
-		zip: 52557,
-	},
-	offers: [],
-	owner: {},
-	area: 23,
-	numberOfBedRooms: 2,
-	numberOfBathRooms: 2,
-	numberOfFloors: 1,
-	yearBuilt: 1999,
-	description:
-		"Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.",
-	propertyType: "APARTMENT",
-	propertyStatus: "AVAILABLE",
-};
