@@ -134,7 +134,7 @@ const InputField = ({ label, name, type }) => (
       width: {
         sm: "100%",
         md: "45%",
-        md: "30%",
+        lg: "30%",
       },
     }}
   >
@@ -154,7 +154,7 @@ const SelectPropertyType = ({}) => (
       width: {
         sm: "100%",
         md: "45%",
-        md: "30%",
+        lg: "30%",
       },
     }}
   >
