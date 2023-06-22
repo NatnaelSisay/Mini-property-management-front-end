@@ -15,7 +15,7 @@ import {
   removeFavorite,
 } from "../apis/propertiesAPi";
 
-export default function PropertyCard({ property, onClick }) {
+export default function PropertyCard({ property, onClick, onRemoveFavorite }) {
   if (!property) return null;
   const [isFavorite, setIsFavorite] = useState(null);
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function PropertyCard({ property, onClick }) {
           if (err.response.status === 404) setIsFavorite(false);
         }
       });
-  }, []);
+  }, [property.id]);
 
   const addToFavorite = () => {
     addFavorite(property.id)
@@ -41,6 +41,7 @@ export default function PropertyCard({ property, onClick }) {
     removeFavorite(property.id)
       .then((res) => {
         setIsFavorite(false);
+        if (onRemoveFavorite) onRemoveFavorite(property.id);
       })
       .catch((err) => {});
   };
