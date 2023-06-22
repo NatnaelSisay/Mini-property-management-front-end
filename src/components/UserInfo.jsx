@@ -12,7 +12,7 @@ import { Box } from "@mui/material";
 
 export default function UserInfo({ users, onApprove, onBlock }) {
   return (
-    users && (
+    users.length && (
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

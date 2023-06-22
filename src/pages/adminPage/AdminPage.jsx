@@ -11,6 +11,7 @@ import "./AdminPage.css";
 import { getUsers } from "../../apis/userApis";
 import { useSelector } from "react-redux";
 import { changeOwnerStatus } from "../../apis/adminAPis";
+import { Pagination } from "@mui/material";
 
 const AdminPage = () => {
   const user = useSelector((state) => state.auth.value);
@@ -21,16 +22,31 @@ const AdminPage = () => {
   const [status, setStatus] = useState(null);
   const [role, setRole] = useState(null);
 
-  useEffect(() => {
-    getUsers()
+  const fetchUsers = (filterData, page) => {
+    getUsers(filterData, page)
       .then((res) => {
-        setUsers(res.data);
+        if (filterData) {
+          setFilteredUsers(res.data);
+        } else setUsers(res.data);
       })
       .catch((err) => {});
+  };
+
+  useEffect(() => {
+    fetchUsers();
   }, []);
 
+  function nextPage(page) {
+    if (filteredUsers) {
+      return fetchUsers({ status, role }, page);
+    }
+    fetchUsers(null, page);
+  }
   function handleFilter(e) {
     e.preventDefault();
+    if (!status && !role) {
+      return;
+    }
     const filterData = { status, role };
     getUsers(filterData)
       .then((res) => {
@@ -110,6 +126,7 @@ const AdminPage = () => {
       <div className="container">
         <div>
           <h2>Users</h2>
+
           <UserInfo
             onApprove={onApprove}
             onBlock={onBlock}
@@ -117,16 +134,19 @@ const AdminPage = () => {
           />
         </div>
       </div>
+
+      <div className="pagination-container">
+        <Pagination
+          count={filteredUsers?.page.totalPages ?? users?.page.totalPages}
+          page={filteredUsers?.page.number ?? users?.page.number ?? 0}
+          onChange={(e, page) => {
+            nextPage(page);
+          }}
+          color="primary"
+        />
+      </div>
     </div>
   );
 };
 
-const mock_user = {
-  role: "ADMIN",
-};
-
-const mockOwners = [{ name: "java", email: "test@gmail.com", role: "OWNER" }];
-const mockCustomers = [
-  { name: "java", email: "test@gmail.com", role: "CUSTOMER" },
-];
 export default AdminPage;
