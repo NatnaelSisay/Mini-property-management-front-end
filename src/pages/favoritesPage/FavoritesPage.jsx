@@ -28,13 +28,12 @@ const FavoritesPage = () => {
 
   const favoritePropertiesRender = favorites.map((favorite) => {
     return (
-      <div key={favorite.id} className="property-card">
+      <div key={favorite.property.id} className="property-card">
         <PropertyCard
-		   onClick={() => {
+          onClick={() => {
             navigate(`/property/${favorite.property.id}`);
           }}
           onRemoveFavorite={onRemoveFavorite}
-         
           property={favorite.property}
         />
       </div>

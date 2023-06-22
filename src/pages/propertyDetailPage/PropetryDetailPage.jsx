@@ -52,23 +52,25 @@ export default function PropetryDetailPage(props) {
             userOffer={userOffer}
             handleMakeOffer={handleMakeOffer}
           />
-          {(!user || user?.role === "USER") && (
-            <div className="make-offer-form">
-              <form ref={userOffer} onSubmit={handleMakeOffer}>
-                <TextField
-                  id="outlined-basic"
-                  label="MinPrice"
-                  variant="outlined"
-                  name="amount"
-                  inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                  size="small"
-                />
-                <Button variant="contained" type="submit">
-                  Make an Offer
-                </Button>
-              </form>
-            </div>
-          )}
+          {(!user || user?.role === "USER") &&
+            (property.propertyStatus == "PENDING" ||
+              property.propertyStatus == "AVAILABLE") && (
+              <div className="make-offer-form">
+                <form ref={userOffer} onSubmit={handleMakeOffer}>
+                  <TextField
+                    id="outlined-basic"
+                    label="MinPrice"
+                    variant="outlined"
+                    name="amount"
+                    inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+                    size="small"
+                  />
+                  <Button variant="contained" type="submit">
+                    Make an Offer
+                  </Button>
+                </form>
+              </div>
+            )}
           <div className="offers-detail">
             <OfferDetailTable offers={property.offers} />
           </div>

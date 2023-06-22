@@ -3,7 +3,6 @@ import LandingPage from "../pages/landingPage/LandingPage";
 import PropetryDetailPage from "../pages/propertyDetailPage/PropetryDetailPage";
 import FavoritesPage from "../pages/favoritesPage/FavoritesPage";
 import AdminPage from "../pages/adminPage/AdminPage";
-import MyOffersPage from "../pages/myOffersPage/MyOffersPage";
 import Login from "../pages/authPage/Login";
 import Signup from "../pages/authPage/SignUp";
 import CreatePostPage from "../pages/createPostPage/CreatePostPage";
@@ -13,6 +12,7 @@ import ProtectedAdmin from "./ProtectedAdmin";
 import ProtectedLanding from "./ProtectedLanding";
 import ProtectedCreatePost from "./ProtectedCreatePost";
 import ProtectedFavorite from "./ProtectedFavorite";
+import OffersPage from "../pages/offersPage/offersPage";
 
 const PageRouter = () => {
   return (
@@ -50,7 +50,7 @@ const PageRouter = () => {
         path="/offers"
         element={
           <ProtectedOffers>
-            <MyOffersPage />{" "}
+            <OffersPage />{" "}
           </ProtectedOffers>
         }
       />

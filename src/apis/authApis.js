@@ -9,3 +9,5 @@ export const login = ({ email, password }) => {
 export const signUp = (data) => {
   return axios.post(`${BASE_URL}/api/v1/auth/register`, data);
 };
+
+
