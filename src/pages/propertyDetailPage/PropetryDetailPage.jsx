@@ -1,32 +1,36 @@
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import { mockProperty } from "../../utils/mockData";
-
 import "./PropertyDetailPage.css";
 import PropertyDetailTable from "../../components/PropertyDetailTable";
 import OfferDetailTable from "../../components/OfferDetailTable";
 import Nav from "../../components/Nav";
+import Snackbar from "@mui/material/Snackbar";
+import imageUrlBuilder from "../../utils/imageUrlBuilder";
 
 // MATERIAL-UI
 import Button from "@mui/material/Button";
 import DialogContentText from "@mui/material/DialogContentText";
 import TextField from "@mui/material/TextField";
 import { useParams } from "react-router-dom";
-import { getProperty } from "../../apis/propertiesAPi";
-
+import { getProperty, makeAnOffer } from "../../apis/propertiesAPi";
 export default function PropetryDetailPage(props) {
   const [property, setProperty] = useState();
   const userOffer = useRef();
   const user = useSelector((state) => state.auth.value);
+  const { id } = useParams();
+  const [showSnackbar, setShowSnackbar] = useState(false);
 
   const handleMakeOffer = (e) => {
     e.preventDefault();
-    console.log("user offer => ", userOffer.current[0].value);
-    // send offer to backend and update
+    const offerValue = userOffer.current[0].value;
+    makeAnOffer(id, offerValue)
+      .then((res) => {
+        setShowSnackbar(true);
+        userOffer.current.reset();
+      })
+      .catch((err) => {});
   };
-
-  const { id } = useParams();
 
   useEffect(() => {
     getProperty(id)
@@ -69,6 +73,17 @@ export default function PropetryDetailPage(props) {
             <OfferDetailTable offers={property.offers} />
           </div>
         </div>
+
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={showSnackbar}
+          autoHideDuration={2000}
+          onClose={(event, reason) => {
+            setShowSnackbar(false);
+          }}
+          key={"top" + "right"}
+          message="Offer made successfully"
+        />
       </div>
     )
   );
@@ -79,7 +94,7 @@ function PropertyDetail({ property, userOffer, handleMakeOffer }) {
     property && (
       <div className="dialog-box">
         <div className="dialog-image">
-          <img src="https://photos.zillowstatic.com/fp/be98bf53c0259949bce4b0b945654cf2-cc_ft_768.webp" />
+          <img src={imageUrlBuilder(property.image)} />
         </div>
         <div>
           <DialogContentText id="alert-dialog-description">

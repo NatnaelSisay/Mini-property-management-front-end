@@ -10,3 +10,9 @@ export const getProperties = (filterData, page = 1) => {
 export const getProperty = (id) => {
   return axios.get(`${BASE_URL}/api/v1/properties/${id}`);
 };
+
+export const makeAnOffer = (id, offerPrice) => {
+  return axios.post(`${BASE_URL}/api/v1/properties/${id}/offers`, {
+    offerPrice,
+  });
+};
