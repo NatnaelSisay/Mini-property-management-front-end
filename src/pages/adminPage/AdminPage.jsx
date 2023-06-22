@@ -16,9 +16,10 @@ const AdminPage = () => {
   const user = useSelector((state) => state.auth.value);
 
   const [users, setUsers] = useState();
+  const [filteredUsers, setFilteredUsers] = useState();
 
-  const [state, setState] = useState("");
-  const [role, setRole] = useState("");
+  const [status, setStatus] = useState(null);
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
     getUsers()
@@ -30,7 +31,12 @@ const AdminPage = () => {
 
   function handleFilter(e) {
     e.preventDefault();
-    console.log("status, role => ", state, role);
+    const filterData = { status, role };
+    getUsers(filterData)
+      .then((res) => {
+        setFilteredUsers(res.data);
+      })
+      .catch((err) => {});
   }
 
   const onApprove = (id) => {
@@ -60,6 +66,12 @@ const AdminPage = () => {
       .catch((err) => {});
   };
 
+  const clearFilter = () => {
+    setStatus(null);
+    setRole(null);
+    setFilteredUsers(null);
+  };
+
   return (
     <div>
       <Nav user={user} />
@@ -68,20 +80,30 @@ const AdminPage = () => {
           <div className="margin-1rem">
             <BasicSelectComponent
               name="Status"
-              options={["All", "ACTIVE", "BLOCKED"]}
-              value={state}
-              setValue={setState}
+              options={[
+                { name: "All", value: null },
+                { name: "Active", value: "ACTIVE" },
+                { name: "Blocked", value: "BLOCKED" },
+                { name: "Pending", value: "PENDING" },
+              ]}
+              value={status}
+              setValue={setStatus}
             />
           </div>
           <div className="margin-1rem">
             <BasicSelectComponent
               name="Role"
-              options={["All", "OWNER", "USER"]}
+              options={[
+                { name: "All", value: null },
+                { name: "Owner", value: "OWNER" },
+                { name: "User", value: "USER" },
+              ]}
               value={role}
               setValue={setRole}
             />
           </div>
           <Button type="submit">filter</Button>
+          {filteredUsers && <Button onClick={clearFilter}>clear</Button>}
         </form>
       </div>
 
@@ -91,7 +113,7 @@ const AdminPage = () => {
           <UserInfo
             onApprove={onApprove}
             onBlock={onBlock}
-            users={users?.users ?? []}
+            users={filteredUsers?.users ?? users?.users ?? []}
           />
         </div>
       </div>
