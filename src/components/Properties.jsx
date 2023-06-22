@@ -5,7 +5,7 @@ const Properties = ({ properties }) => {
   return properties.map((property, index) => {
     return (
       <div key={index} className="property-card">
-        <Link to={`/property/${index}`}>
+        <Link to={`/property/${property.id}`}>
           <PropertyCard property={property} />
         </Link>
       </div>

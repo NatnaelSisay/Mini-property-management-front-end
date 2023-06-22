@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import { mockProperty } from "../../utils/mockData";
@@ -12,9 +12,11 @@ import Nav from "../../components/Nav";
 import Button from "@mui/material/Button";
 import DialogContentText from "@mui/material/DialogContentText";
 import TextField from "@mui/material/TextField";
+import { useParams } from "react-router-dom";
+import { getProperty } from "../../apis/propertiesAPi";
 
 export default function PropetryDetailPage(props) {
-  const [property, setProperty] = useState(mockProperty);
+  const [property, setProperty] = useState();
   const userOffer = useRef();
   const user = useSelector((state) => state.auth.value);
 
@@ -23,6 +25,18 @@ export default function PropetryDetailPage(props) {
     console.log("user offer => ", userOffer.current[0].value);
     // send offer to backend and update
   };
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    getProperty(id)
+      .then((res) => {
+        setProperty(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
 
   return (
     property && (

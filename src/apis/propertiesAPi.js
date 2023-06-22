@@ -6,3 +6,7 @@ export const getProperties = (filterData, page = 1) => {
     params: { ...(filterData ?? {}), page },
   });
 };
+
+export const getProperty = (id) => {
+  return axios.get(`${BASE_URL}/api/v1/properties/${id}`);
+};
