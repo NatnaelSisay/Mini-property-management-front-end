@@ -1,13 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PropertyCard from "./PropertyCard";
 
 const Properties = ({ properties }) => {
+  const navigate = useNavigate();
   return properties.map((property, index) => {
     return (
       <div key={index} className="property-card">
-        <Link to={`/property/${property.id}`}>
-          <PropertyCard property={property} />
-        </Link>
+        <PropertyCard
+          onClick={() => {
+            navigate(`/property/${property.id}`);
+          }}
+          property={property}
+        />
       </div>
     );
   });

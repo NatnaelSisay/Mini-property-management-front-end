@@ -16,3 +16,14 @@ export const makeAnOffer = (id, offerPrice) => {
     offerPrice,
   });
 };
+
+export const getFavorite = (id) => {
+  return axios.get(`${BASE_URL}/api/v1/properties/${id}/favorites`);
+};
+
+export const addFavorite = (id) => {
+  return axios.put(`${BASE_URL}/api/v1/properties/${id}/favorites`);
+};
+export const removeFavorite = (id) => {
+  return axios.delete(`${BASE_URL}/api/v1/properties/${id}/favorites`);
+};

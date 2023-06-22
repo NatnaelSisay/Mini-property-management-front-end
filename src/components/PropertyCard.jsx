@@ -7,12 +7,46 @@ import Typography from "@mui/joy/Typography";
 import IconButton from "@mui/joy/IconButton";
 import Favorite from "@mui/icons-material/Favorite";
 import imageUrlBuilder from "../utils/imageUrlBuilder";
+import { Box, Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import {
+  addFavorite,
+  getFavorite,
+  removeFavorite,
+} from "../apis/propertiesAPi";
 
-export default function PropertyCard(props) {
-  if (!props) return null;
-  const { property } = props;
+export default function PropertyCard({ property, onClick }) {
+  if (!property) return null;
+  const [isFavorite, setIsFavorite] = useState(null);
+  useEffect(() => {
+    getFavorite(property.id)
+      .then((res) => {
+        setIsFavorite(res);
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 404) setIsFavorite(false);
+        }
+      });
+  }, []);
+
+  const addToFavorite = () => {
+    addFavorite(property.id)
+      .then((res) => {
+        setIsFavorite(true);
+      })
+      .catch((err) => {});
+  };
+  const removeFromFavorites = () => {
+    removeFavorite(property.id)
+      .then((res) => {
+        setIsFavorite(false);
+      })
+      .catch((err) => {});
+  };
+
   return (
-    <Card variant="outlined" sx={{ width: 400, margin: 3 }}>
+    <Card variant="outlined" sx={{ width: 400, margin: 3 }} onClick={onClick}>
       <CardOverflow>
         <AspectRatio ratio="2">
           <img src={imageUrlBuilder(property.image)} loading="lazy" alt="" />
@@ -82,6 +116,28 @@ export default function PropertyCard(props) {
             {property.propertyType} | {property.propertyStatus}
           </Typography>
         </CardContent>
+
+        {isFavorite !== null && (
+          <Box
+            sx={{
+              padding: "10px",
+              height: "50px",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (isFavorite) removeFromFavorites();
+              else addToFavorite();
+            }}
+          >
+            <Favorite
+              sx={{
+                color: isFavorite ? "red" : "black",
+              }}
+            />
+          </Box>
+        )}
       </CardOverflow>
     </Card>
   );
