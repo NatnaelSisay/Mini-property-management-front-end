@@ -106,8 +106,11 @@ const OffersPage = () => {
                     <ContingetStatus
                       isOwner={isOwner}
                       offer={offer}
-                      onClick={() =>
+                      onAccept={() =>
                         _updateOffer(offer.id, "ACCEPT_CONTINGENT")
+                      }
+                      onCancel={() =>
+                        _updateOffer(offer.id, "CANCEL_CONTINGENT")
                       }
                     />
                   )}
@@ -158,7 +161,7 @@ const OffersPage = () => {
   );
 };
 
-const ContingetStatus = ({ isOwner, offer, onClick }) => {
+const ContingetStatus = ({ isOwner, offer, onAccept, onCancel }) => {
   const acceptedByOwner = offer.acceptedByOwner;
   const acceptedByCustomer = offer.acceptedByCustomer;
 
@@ -178,9 +181,14 @@ const ContingetStatus = ({ isOwner, offer, onClick }) => {
     }
   }
   return (
-    <Button variant="contained" color="success" onClick={onClick}>
+    <>
+    <Button variant="contained" color="error" onClick={onCancel}>
+      CANCEL_CONTINGENT
+    </Button>
+    <Button variant="contained" color="success" onClick={onAccept}>
       ACCEPT_CONTINGENT
     </Button>
+    </>
   );
 };
 
