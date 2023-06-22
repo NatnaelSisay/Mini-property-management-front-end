@@ -9,25 +9,33 @@ import Favorite from "@mui/icons-material/Favorite";
 import imageUrlBuilder from "../utils/imageUrlBuilder";
 import { Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   addFavorite,
   getFavorite,
   removeFavorite,
 } from "../apis/propertiesAPi";
 
-export default function PropertyCard({ property, onClick, onRemoveFavorite }) {
+export default function PropertyCard({
+  property,
+  onClick,
+  onRemoveFavorite,
+  onDelete,
+  isOwner,
+}) {
   if (!property) return null;
   const [isFavorite, setIsFavorite] = useState(null);
   useEffect(() => {
-    getFavorite(property.id)
-      .then((res) => {
-        setIsFavorite(res);
-      })
-      .catch((err) => {
-        if (err.response) {
-          if (err.response.status === 404) setIsFavorite(false);
-        }
-      });
+    !isOwner &&
+      getFavorite(property.id)
+        .then((res) => {
+          setIsFavorite(res);
+        })
+        .catch((err) => {
+          if (err.response) {
+            if (err.response.status === 404) setIsFavorite(false);
+          }
+        });
   }, [property.id]);
 
   const addToFavorite = () => {
@@ -135,6 +143,26 @@ export default function PropertyCard({ property, onClick, onRemoveFavorite }) {
             <Favorite
               sx={{
                 color: isFavorite ? "red" : "black",
+              }}
+            />
+          </Box>
+        )}
+        {isOwner && property.propertyStatus === "AVAILABLE" && (
+          <Box
+            sx={{
+              padding: "10px",
+              height: "50px",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(property.id);
+            }}
+          >
+            <DeleteIcon
+              sx={{
+                color: "red",
               }}
             />
           </Box>

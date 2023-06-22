@@ -7,7 +7,7 @@ import Nav from "../../components/Nav";
 import Properties from "../../components/Properties";
 import PropertiesFilter from "../../components/PropertiesFilter";
 import { mockProperty } from "../../utils/mockData";
-import { getProperties } from "../../apis/propertiesAPi";
+import { deleteProperty, getProperties } from "../../apis/propertiesAPi";
 import { Pagination } from "@mui/material";
 
 const LandingPage = () => {
@@ -39,6 +39,16 @@ const LandingPage = () => {
       .catch((err) => {});
   };
 
+  const onDelete = (id) => {
+    deleteProperty(id)
+      .then((res) => {
+        fetchProperties(filterData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     fetchProperties();
   }, [user]);
@@ -64,6 +74,7 @@ const LandingPage = () => {
 
       <div className="container flex-wrap">
         <Properties
+          onDelete={onDelete}
           properties={
             filteredProperties?.properties ?? properties?.properties ?? []
           }
