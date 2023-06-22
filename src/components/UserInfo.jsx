@@ -21,7 +21,7 @@ export default function UserInfo({ users, onApprove, onBlock }) {
               <TableCell align="left">Email</TableCell>
               <TableCell align="left">UserType</TableCell>
               <TableCell align="left">STATUS</TableCell>
-              <TableCell align="center">Action</TableCell>
+              <TableCell align="left">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -42,18 +42,24 @@ export default function UserInfo({ users, onApprove, onBlock }) {
                     <Box
                       sx={{
                         display: "flex",
-                        justifyContent: "center",
+                        justifyContent: "left",
                         alignItems: "center",
                         gap: "1rem",
                       }}
                     >
                       {row.accountStatus != "ACTIVE" && (
-                        <Button variant="contained" onClick={onApprove}>
+                        <Button
+                          variant="contained"
+                          onClick={() => onApprove(row.id)}
+                        >
                           APPROVE
                         </Button>
                       )}
                       {row.accountStatus !== "BLOCKED" && (
-                        <Button variant="contained" onClick={onBlock}>
+                        <Button
+                          variant="contained"
+                          onClick={() => onBlock(row.id)}
+                        >
                           BLOCK
                         </Button>
                       )}

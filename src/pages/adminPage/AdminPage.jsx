@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import "./AdminPage.css";
 import { getUsers } from "../../apis/userApis";
 import { useSelector } from "react-redux";
+import { changeOwnerStatus } from "../../apis/adminAPis";
 
 const AdminPage = () => {
   const user = useSelector((state) => state.auth.value);
@@ -31,6 +32,33 @@ const AdminPage = () => {
     e.preventDefault();
     console.log("status, role => ", state, role);
   }
+
+  const onApprove = (id) => {
+    changeOwnerStatus(id, "approve")
+      .then((res) => {
+        const newUsers = users.users.map((user) => {
+          if (user.id === res.data.id) {
+            return res.data;
+          }
+          return user;
+        });
+        setUsers({ ...users, users: newUsers });
+      })
+      .catch((err) => {});
+  };
+  const onBlock = (id) => {
+    changeOwnerStatus(id, "block")
+      .then((res) => {
+        const newUsers = users.users.map((user) => {
+          if (user.id === res.data.id) {
+            return res.data;
+          }
+          return user;
+        });
+        setUsers({ ...users, users: newUsers });
+      })
+      .catch((err) => {});
+  };
 
   return (
     <div>
@@ -60,7 +88,11 @@ const AdminPage = () => {
       <div className="container">
         <div>
           <h2>Users</h2>
-          <UserInfo users={users?.users ?? []} />
+          <UserInfo
+            onApprove={onApprove}
+            onBlock={onBlock}
+            users={users?.users ?? []}
+          />
         </div>
       </div>
     </div>
