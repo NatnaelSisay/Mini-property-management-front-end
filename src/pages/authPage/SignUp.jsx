@@ -79,7 +79,11 @@ const Signup = () => {
           <BasicSelectComponent
             id="role"
             name="role"
-            options={["OWNER", "USER", "ADMIN"]}
+            options={[
+              { name: "Owner", value: "OWNER" },
+              { name: "User", value: "USER" },
+              { name: "Admin", value: "ADMIN" },
+            ]}
             value={role}
             setValue={setRole}
           />
