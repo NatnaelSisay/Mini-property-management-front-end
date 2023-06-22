@@ -182,12 +182,14 @@ const ContingetStatus = ({ isOwner, offer, onAccept, onCancel }) => {
   }
   return (
     <>
-    <Button variant="contained" color="error" onClick={onCancel}>
-      CANCEL_CONTINGENT
-    </Button>
-    <Button variant="contained" color="success" onClick={onAccept}>
-      ACCEPT_CONTINGENT
-    </Button>
+      {isOwner && (
+        <Button variant="contained" color="error" onClick={onCancel}>
+          CANCEL_CONTINGENT
+        </Button>
+      )}
+      <Button variant="contained" color="success" onClick={onAccept}>
+        ACCEPT_CONTINGENT
+      </Button>
     </>
   );
 };
