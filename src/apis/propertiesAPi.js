@@ -32,3 +32,6 @@ export const createProperty = (propertyData) => {
   console.log(propertyData);
   return axios.post(`${BASE_URL}/api/v1/properties`, propertyData);
 };
+export const deleteProperty = (id) => {
+  return axios.delete(`${BASE_URL}/api/v1/properties/${id}`);
+};
