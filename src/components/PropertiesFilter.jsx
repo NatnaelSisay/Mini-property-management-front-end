@@ -29,14 +29,14 @@ const PropertiesFilter = ({ handleFilter, onClear, showClear }, filter) => {
           id="numberOfBedRooms"
           label="BedRooms"
           variant="outlined"
-          name="numberOfBedRooms"
+          name="bedRooms"
           inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
         />
         <TextField
           id="numberOfBathRooms"
           label="BathRooms"
           variant="outlined"
-          name="numberOfBathRooms"
+          name="bathRooms"
           inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
         />
         <TextField
