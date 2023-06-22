@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getUserFromAccessToken } from "../utils/jwtUtils";
 
+console.log("getUserFromAccessToken", getUserFromAccessToken());
 const initialState = { value: getUserFromAccessToken() || null };
 
 export const authSlice = createSlice({

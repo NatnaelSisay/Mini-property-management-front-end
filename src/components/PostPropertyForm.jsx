@@ -11,9 +11,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { forwardRef } from "react";
 
-const PostPropertyForm = ({ selectedImage, setImageSelected }) => {
+const PostPropertyForm = (
+  { selectedImage, setImageSelected, onSubmit },
+  formRef
+) => {
   const handleButtonClick = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -40,7 +43,7 @@ const PostPropertyForm = ({ selectedImage, setImageSelected }) => {
 
         <br />
 
-        <form>
+        <form ref={formRef}>
           <Box
             sx={{
               display: "flex",
@@ -118,7 +121,7 @@ const PostPropertyForm = ({ selectedImage, setImageSelected }) => {
 
           <br />
           <br />
-          <Button color="primary" variant="contained">
+          <Button color="primary" variant="contained" onClick={onSubmit}>
             Post Property
           </Button>
         </form>
@@ -134,11 +137,12 @@ const InputField = ({ label, name, type }) => (
       width: {
         sm: "100%",
         md: "45%",
-        md: "30%",
+        lg: "30%",
       },
     }}
   >
     <TextField
+      required
       fullWidth
       label={label}
       variant="outlined"
@@ -154,13 +158,13 @@ const SelectPropertyType = ({}) => (
       width: {
         sm: "100%",
         md: "45%",
-        md: "30%",
+        lg: "30%",
       },
     }}
   >
     <InputLabel>Property type</InputLabel>
-    <Select label="Property type">
-      <MenuItem value="HOUSE">Couse</MenuItem>
+    <Select name="propertyType" label="Property type" required>
+      <MenuItem value="HOUSE">House</MenuItem>
       <MenuItem value="CONDO">Condo</MenuItem>
       <MenuItem value="TOWNHOUSE">Town house</MenuItem>
       <MenuItem value="DUPLEX">Duplex</MenuItem>
@@ -169,4 +173,4 @@ const SelectPropertyType = ({}) => (
   </FormControl>
 );
 
-export default PostPropertyForm;
+export default forwardRef(PostPropertyForm);

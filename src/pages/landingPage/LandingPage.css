@@ -1,26 +1,40 @@
 .container {
-	width: 80%;
-	margin: 1rem auto;
-	/* border: 1px solid black; */
+  width: 80%;
+  margin: 1rem auto;
+  /* border: 1px solid black; */
 }
 
 .center-vertical {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .filter-fields {
-	margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
 }
 
 .flex-wrap {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .property-card {
-	margin: 1rem 0;
+  margin: 1rem 0;
+}
+.filter-fields .small-margin {
+  margin: 0.5rem 0.5rem;
+  /* display: block; */
+}
+
+.pagination-container {
+  width: 50%;
+  margin: 0 auto 2rem auto;
+  display: flex;
+  justify-content: center;
 }

@@ -7,64 +7,82 @@ import Nav from "../../components/Nav";
 import Properties from "../../components/Properties";
 import PropertiesFilter from "../../components/PropertiesFilter";
 import { mockProperty } from "../../utils/mockData";
+import { getProperties } from "../../apis/propertiesAPi";
+import { Pagination } from "@mui/material";
 
 const LandingPage = () => {
-	const filter = useRef();
-	const [properties, setProperties] = useState([]);
-	const user = useSelector((state) => state.auth.value);
+  const filter = useRef();
+  const [properties, setProperties] = useState(null);
+  const [filteredProperties, setFilteredProperties] = useState(null);
+  const user = useSelector((state) => state.auth.value);
+  const [filterData, setFilterData] = useState(null);
 
-	function handleFilter(e) {
-		e.preventDefault();
-		const {
-			minPrice,
-			maxPrice,
-			numberOfBedRooms,
-			numberOfBathRooms,
-			zipCode,
-			city,
-			state,
-		} = filter.current;
+  function handleFilter(e) {
+    e.preventDefault();
+    const formData = new FormData(filter.current);
+    const data = Object.fromEntries(formData);
+    setFilterData(data);
+    fetchProperties(data);
+  }
 
-		const data = {
-			minPrice: Number(minPrice.value),
-			maxPrice: maxPrice.value,
-			bedRooms: numberOfBedRooms.value,
-			bathRooms: numberOfBathRooms.value,
-			zipCode: zipCode.value,
-			city: city.value,
-			state: state.value,
-		};
+  function nextPage(page) {
+    fetchProperties(filterData, page);
+  }
 
-		console.log("Filter data", data);
-		// call the api and update the properties
-		// GET /api/v1/properties data
-		fetchData();
-	}
+  const fetchProperties = (filterData, page) => {
+    getProperties(filterData, page)
+      .then((res) => {
+        if (filterData) {
+          setFilteredProperties(res.data);
+        } else setProperties(res.data);
+      })
+      .catch((err) => {});
+  };
 
-	function fetchData() {
-		setProperties(Array(5).fill(mockProperty));
-	}
+  useEffect(() => {
+    fetchProperties();
+  }, [user]);
 
-	useEffect(() => {
-		console.log("useEffcect - Landing page");
-		fetchData();
-	}, []);
+  return (
+    <div>
+      <Nav user={user} />
 
-	return (
-		<div>
-			<Nav user={user} />
+      {(!user || user.role === "USER") && (
+        <div className="container">
+          <PropertiesFilter
+            showClear={filteredProperties}
+            ref={filter}
+            onClear={() => {
+              setFilterData(null);
+              setFilteredProperties(null);
+              filter.current.reset();
+            }}
+            handleFilter={handleFilter}
+          />
+        </div>
+      )}
 
-			{(!user || user.role === "USER") && (
-				<div className="container">
-					<PropertiesFilter handleFilter={handleFilter} />
-				</div>
-			)}
-
-			<div className="container flex-wrap">
-				<Properties properties={properties} />
-			</div>
-		</div>
-	);
+      <div className="container flex-wrap">
+        <Properties
+          properties={
+            filteredProperties?.properties ?? properties?.properties ?? []
+          }
+        />
+      </div>
+      <div className="pagination-container">
+        <Pagination
+          count={
+            filteredProperties?.page.totalPages ?? properties?.page.totalPages
+          }
+          page={filteredProperties?.page.number ?? properties?.page.number ?? 0}
+          onChange={(e, page) => {
+            nextPage(page);
+          }}
+          color="primary"
+        />
+      </div>
+    </div>
+  );
 };
 
 export default LandingPage;

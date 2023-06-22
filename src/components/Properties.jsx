@@ -1,16 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PropertyCard from "./PropertyCard";
 
 const Properties = ({ properties }) => {
-	return properties.map((property, index) => {
-		return (
-			<div key={index} className="property-card">
-				<Link to={`/property/${index}`}>
-					<PropertyCard property={property} />
-				</Link>
-			</div>
-		);
-	});
+  const navigate = useNavigate();
+  return properties.map((property, index) => {
+    return (
+      <div key={index} className="property-card">
+        <PropertyCard
+          onClick={() => {
+            navigate(`/property/${property.id}`);
+          }}
+          property={property}
+        />
+      </div>
+    );
+  });
 };
 
 export default Properties;

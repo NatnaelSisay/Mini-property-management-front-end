@@ -1,19 +1,18 @@
-import { mockUser } from "../utils/mockData";
-
-export const getUserFromAccessToken = () => {
-	const tokenString = localStorage.getItem("token") || null;
-	if (!tokenString) return null;
-
-	const token = tokenString.split(" ")[1];
-	// decode the user and return user data
-	return mockUser;
+import { deleteCookie, getCookie } from "./cookieUtil";
+import jwt_decode from "jwt-decode";
+export const decodeToken = (token) => {
+  if (!token) {
+    return null;
+  }
+  return jwt_decode(token);
 };
 
-export const getSampleUser = () => {
-	localStorage.setItem("token", "dummy-token");
-	return mockUser;
+export const getUserFromAccessToken = () => {
+  const accessToken = getCookie("accessToken");
+  return decodeToken(accessToken);
 };
 
 export const removeToken = () => {
-	localStorage.removeItem("token");
+  deleteCookie("accessToken");
+  deleteCookie("refreshToken");
 };
