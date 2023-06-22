@@ -28,14 +28,15 @@ npm run dev
 successfull run will show the following out put
 
 ```bash
-  VITE v4.3.9  ready in 580 ms
+  VITE v4.3.9  ready in 492 ms
 
-  Local:   http://localhost:5173/
-  Network: use --host to expose
+  Local:   http://localhost:3000/
+  Network: http://172.19.142.27:3000/
+  Network: http://192.168.64.1:3000/
   press h to show help
 ```
 
-##### 3. Open broser to the given link [Local](http://localhost:5173/)
+##### 3. Open broser to the given link [Local](http://localhost:3000/)
 
 ### Links
 
