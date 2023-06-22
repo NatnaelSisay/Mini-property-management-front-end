@@ -27,3 +27,8 @@ export const addFavorite = (id) => {
 export const removeFavorite = (id) => {
   return axios.delete(`${BASE_URL}/api/v1/properties/${id}/favorites`);
 };
+
+export const createProperty = (propertyData) => {
+  console.log(propertyData);
+  return axios.post(`${BASE_URL}/api/v1/properties`, propertyData);
+};
