@@ -2,7 +2,7 @@
 
 ### About the project
 
-Websites like [zillow](https://www.zillow.com/) and others allow users to look for homes to purchase and sell. We attempted to make a scaled-down version of it in this project. React was utilized for the front-end, and Spring Boot was used for the back-end.
+A web application that allows users to look for homes to purchase and sell. We attempted to make a scaled-down version of it in this project. React was utilized for the front end, and Spring Boot was used for the back end.
 
 ## Setup
 
